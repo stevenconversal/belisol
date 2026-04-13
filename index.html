@@ -3,470 +3,252 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conversal Dashboard — Belisol Franchise</title>
+  <title>Conversal — Belisol Analyse & Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg-page: #f4f3ef;
-      --bg-card: #ffffff;
-      --bg-surface: #f8f7f4;
-      --bg-nav: #ffffff;
-      --text-primary: #1a1a18;
-      --text-secondary: #6b6b66;
-      --text-tertiary: #9c9a92;
-      --border: rgba(0,0,0,0.08);
-      --border-hover: rgba(0,0,0,0.15);
-      --green: #1D9E75;
-      --green-light: #E1F5EE;
-      --green-dark: #0F6E56;
-      --blue: #378ADD;
-      --blue-light: #E6F1FB;
-      --blue-dark: #0C447C;
-      --amber: #EF9F27;
-      --amber-light: #FAEEDA;
-      --amber-dark: #854F0B;
-      --red: #E24B4A;
-      --red-light: #FCEBEB;
-      --red-dark: #A32D2D;
-      --gray: #B4B2A9;
-      --radius: 10px;
-      --radius-lg: 14px;
-      --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg-page:#f4f3ef;--bg-card:#ffffff;--bg-surface:#f8f7f4;--bg-nav:#ffffff;
+      --text-primary:#1a1a18;--text-secondary:#6b6b66;--text-tertiary:#9c9a92;
+      --border:rgba(0,0,0,0.08);--border-hover:rgba(0,0,0,0.15);
+      --green:#1D9E75;--green-light:#E1F5EE;--green-dark:#0F6E56;
+      --blue:#378ADD;--blue-light:#E6F1FB;--blue-dark:#0C447C;
+      --amber:#EF9F27;--amber-light:#FAEEDA;--amber-dark:#854F0B;
+      --red:#E24B4A;--red-light:#FCEBEB;--red-dark:#A32D2D;
+      --gray:#B4B2A9;--purple:#534AB7;--purple-light:#EEEDFE;--purple-dark:#3C3489;
+      --radius:10px;--radius-lg:14px;
+      --font:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-page: #1a1a18;
-        --bg-card: #242422;
-        --bg-surface: #1e1e1c;
-        --bg-nav: #242422;
-        --text-primary: #e8e6de;
-        --text-secondary: #9c9a92;
-        --text-tertiary: #6b6b66;
-        --border: rgba(255,255,255,0.08);
-        --border-hover: rgba(255,255,255,0.15);
-      }
-    }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg-page);
-      color: var(--text-primary);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Nav */
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 24px;
-      background: var(--bg-nav);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .nav-left { display: flex; align-items: center; gap: 16px; }
-    .nav-logo { font-size: 16px; font-weight: 600; color: var(--text-primary); }
-    .nav-logo span { color: var(--green); }
-    .nav-sep { width: 1px; height: 22px; background: var(--border); }
-    .nav-tabs { display: flex; gap: 4px; }
-    .nav-tab {
-      padding: 6px 14px;
-      border-radius: var(--radius);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.15s;
-      border: none;
-      background: transparent;
-      font-family: var(--font);
-    }
-    .nav-tab:hover { background: var(--bg-surface); color: var(--text-primary); }
-    .nav-tab.active { background: var(--green); color: #fff; }
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-    .nav-avatar {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: var(--green-light); color: var(--green-dark);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 600;
-    }
-    .nav-user { font-size: 13px; color: var(--text-secondary); }
-
-    /* Body */
-    .dashboard { max-width: 1200px; margin: 0 auto; padding: 20px 24px 40px; }
-
-    /* Filters */
-    .filters {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 20px; flex-wrap: wrap;
-    }
-    .filter-label {
-      font-size: 11px; font-weight: 600; color: var(--text-tertiary);
-      text-transform: uppercase; letter-spacing: 0.05em;
-    }
-    .filter-chip {
-      padding: 5px 14px; border-radius: var(--radius);
-      font-size: 12px; font-weight: 500; color: var(--text-secondary);
-      background: var(--bg-card); border: 1px solid var(--border);
-      cursor: pointer; transition: all 0.15s;
-      font-family: var(--font);
-    }
-    .filter-chip:hover { border-color: var(--border-hover); color: var(--text-primary); }
-    .filter-chip.active { background: var(--green); color: #fff; border-color: var(--green); }
-    .filter-spacer { flex: 1; }
-    .period-group { display: flex; gap: 4px; }
-    .period-btn {
-      padding: 5px 12px; border-radius: var(--radius);
-      font-size: 11px; font-weight: 500; color: var(--text-tertiary);
-      background: var(--bg-card); border: 1px solid var(--border);
-      cursor: pointer; font-family: var(--font); transition: all 0.15s;
-    }
-    .period-btn:hover { border-color: var(--border-hover); }
-    .period-btn.active { background: var(--text-primary); color: var(--bg-page); border-color: var(--text-primary); }
-
-    /* KPI row */
-    .kpi-row { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; margin-bottom: 20px; }
-    .kpi {
-      background: var(--bg-card); border-radius: var(--radius-lg);
-      padding: 18px 16px; border: 1px solid var(--border);
-    }
-    .kpi-label { font-size: 11px; font-weight: 500; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 6px; }
-    .kpi-value { font-size: 26px; font-weight: 600; color: var(--text-primary); line-height: 1.1; }
-    .kpi-delta { font-size: 11px; font-weight: 500; margin-top: 4px; }
-    .kpi-up { color: var(--green-dark); }
-    .kpi-down { color: var(--red-dark); }
-    .kpi-neutral { color: var(--text-tertiary); }
-
-    /* Grid */
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    .grid-full { grid-column: 1 / -1; }
-
-    /* Card */
-    .card {
-      background: var(--bg-card); border-radius: var(--radius-lg);
-      padding: 20px; border: 1px solid var(--border);
-    }
-    .card-title {
-      font-size: 11px; font-weight: 600; color: var(--text-tertiary);
-      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 14px;
-    }
-
-    /* Table */
-    .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .tbl th {
-      text-align: left; font-weight: 600; color: var(--text-tertiary);
-      font-size: 11px; padding: 8px 10px;
-      border-bottom: 1px solid var(--border);
-      text-transform: uppercase; letter-spacing: 0.03em;
-    }
-    .tbl td {
-      padding: 9px 10px; border-bottom: 1px solid var(--border);
-      color: var(--text-primary); font-variant-numeric: tabular-nums;
-    }
-    .tbl th:nth-child(n+2), .tbl td:nth-child(n+2) { text-align: center; }
-    .tbl tr:last-child td { border-bottom: none; }
-
-    /* Dot */
-    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
-
-    /* Progress bar */
-    .bar-bg { width: 100%; height: 5px; background: var(--bg-surface); border-radius: 3px; margin-top: 4px; }
-    .bar { height: 5px; border-radius: 3px; }
-
-    /* Channel tag */
-    .ch-tag {
-      display: inline-block; padding: 2px 10px; border-radius: 6px;
-      font-size: 11px; font-weight: 600;
-    }
-    .ch-meta { background: var(--green-light); color: var(--green-dark); }
-    .ch-google { background: var(--blue-light); color: var(--blue-dark); }
-    .ch-organic { background: var(--amber-light); color: var(--amber-dark); }
-
-    /* Legend */
-    .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; font-size: 11px; color: var(--text-secondary); }
-    .legend-item { display: flex; align-items: center; gap: 5px; }
-    .legend-sq { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-
-    /* Chart wrapper */
-    .chart-wrap { position: relative; width: 100%; }
-
-    /* Responsive */
-    @media (max-width: 800px) {
-      .kpi-row { grid-template-columns: repeat(2, 1fr); }
-      .grid { grid-template-columns: 1fr; }
-      .nav-tabs { display: none; }
-    }
+    @media(prefers-color-scheme:dark){:root{
+      --bg-page:#1a1a18;--bg-card:#242422;--bg-surface:#1e1e1c;--bg-nav:#242422;
+      --text-primary:#e8e6de;--text-secondary:#9c9a92;--text-tertiary:#6b6b66;
+      --border:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.15);
+    }}
+    body{font-family:var(--font);background:var(--bg-page);color:var(--text-primary);line-height:1.5;-webkit-font-smoothing:antialiased}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--bg-nav);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+    .nav-left{display:flex;align-items:center;gap:16px}
+    .nav-logo{font-size:16px;font-weight:600;color:var(--text-primary)}.nav-logo span{color:var(--green)}
+    .nav-sep{width:1px;height:22px;background:var(--border)}
+    .nav-tabs{display:flex;gap:4px}
+    .nav-tab{padding:6px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;color:var(--text-secondary);cursor:pointer;border:none;background:transparent;font-family:var(--font);transition:all .15s}
+    .nav-tab:hover{background:var(--bg-surface);color:var(--text-primary)}
+    .nav-tab.active{background:var(--green);color:#fff}
+    .nav-right{display:flex;align-items:center;gap:10px}
+    .nav-avatar{width:30px;height:30px;border-radius:50%;background:var(--green-light);color:var(--green-dark);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+    .nav-user{font-size:13px;color:var(--text-secondary)}
+    .section{display:none}.section.active{display:block}
+    .container{max-width:1200px;margin:0 auto;padding:20px 24px 40px}
+    .slide{padding:0 0 32px}.slide+.slide{border-top:1px solid var(--border);padding-top:32px}
+    .s-label{font-size:11px;font-weight:600;color:var(--green);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+    .s-title{font-size:22px;font-weight:600;color:var(--text-primary);margin-bottom:6px;line-height:1.3}
+    .s-sub{font-size:14px;color:var(--text-secondary);margin-bottom:20px;line-height:1.6}
+    .kpi-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:20px}
+    .kpi-row-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+    .kpi-card{background:var(--bg-card);border-radius:var(--radius-lg);padding:16px;border:1px solid var(--border)}
+    .kpi-lab{font-size:11px;font-weight:500;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px}
+    .kpi-val{font-size:24px;font-weight:600;color:var(--text-primary)}.kpi-val.red{color:var(--red)}
+    .kpi-delta{font-size:11px;font-weight:500;margin-top:3px;color:var(--red-dark)}
+    .tbl{width:100%;border-collapse:collapse;font-size:13px}
+    .tbl th{text-align:center;font-weight:600;color:var(--text-tertiary);font-size:11px;padding:8px 10px;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.03em}
+    .tbl th:first-child{text-align:left}
+    .tbl td{padding:10px;border-bottom:1px solid var(--border);color:var(--text-primary);text-align:center;font-variant-numeric:tabular-nums}
+    .tbl td:first-child{text-align:left}.tbl tr:last-child td{border-bottom:none}
+    .pos-tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600}
+    .pos-bad{background:var(--red-light);color:var(--red-dark)}.pos-ok{background:var(--amber-light);color:var(--amber-dark)}
+    .pos-none{background:var(--bg-surface);color:var(--text-tertiary)}
+    .vol-bar{display:inline-block;height:6px;border-radius:3px;background:var(--red);vertical-align:middle;margin-left:6px}
+    .insight{border-radius:var(--radius);padding:14px 16px;font-size:13px;line-height:1.5;margin-top:16px}
+    .insight-red{background:var(--red-light);color:#791F1F}.insight-amber{background:var(--amber-light);color:#633806}.insight-green{background:var(--green-light);color:#085041}
+    .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+    .problem-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px}
+    .problem-num{font-size:28px;font-weight:600;color:var(--red);margin-bottom:4px}
+    .problem-label{font-size:13px;color:var(--text-secondary);line-height:1.4}
+    .problem-ctx{font-size:12px;color:var(--text-tertiary);margin-top:4px;font-style:italic}
+    .vs-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:start;margin-bottom:20px}
+    .vs-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px}
+    .vs-badge{display:inline-block;padding:3px 12px;border-radius:6px;font-size:11px;font-weight:600;margin-bottom:8px}
+    .vs-bad{background:var(--red-light);color:var(--red-dark)}.vs-good{background:var(--green-light);color:var(--green-dark)}
+    .vs-title{font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:6px}
+    .vs-item{font-size:13px;color:var(--text-secondary);padding:3px 0;line-height:1.4}
+    .vs-arrow{font-size:20px;color:var(--text-tertiary);align-self:center;padding-top:30px}
+    .track-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+    .track{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px}
+    .track-badge{display:inline-block;padding:3px 12px;border-radius:6px;font-size:11px;font-weight:600;margin-bottom:10px}
+    .track-urgent{background:var(--red-light);color:var(--red-dark)}.track-growth{background:var(--green-light);color:var(--green-dark)}.track-insight{background:var(--blue-light);color:var(--blue-dark)}
+    .track-title{font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:10px}
+    .track-item{font-size:13px;color:var(--text-secondary);padding:5px 0 5px 16px;position:relative;line-height:1.5}
+    .track-item::before{content:'';position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;background:var(--green)}
+    .track-impact{font-size:12px;font-weight:600;color:var(--green);margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+    .cta-btn{display:inline-block;padding:10px 28px;border-radius:var(--radius);font-size:14px;font-weight:500;color:#fff;background:var(--green);border:none;cursor:pointer;font-family:var(--font);transition:opacity .15s}
+    .cta-btn:hover{opacity:.9}
+    .chart-wrap{position:relative;width:100%}
+    .legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-size:11px;color:var(--text-secondary)}
+    .legend-item{display:flex;align-items:center;gap:5px}.legend-sq{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+    .filters{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+    .filter-label{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em}
+    .filter-chip{padding:5px 14px;border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--text-secondary);background:var(--bg-card);border:1px solid var(--border);cursor:pointer;font-family:var(--font);transition:all .15s}
+    .filter-chip:hover{border-color:var(--border-hover);color:var(--text-primary)}
+    .filter-chip.active{background:var(--green);color:#fff;border-color:var(--green)}
+    .filter-spacer{flex:1}
+    .period-group{display:flex;gap:4px}
+    .period-btn{padding:5px 12px;border-radius:var(--radius);font-size:11px;font-weight:500;color:var(--text-tertiary);background:var(--bg-card);border:1px solid var(--border);cursor:pointer;font-family:var(--font);transition:all .15s}
+    .period-btn:hover{border-color:var(--border-hover)}
+    .period-btn.active{background:var(--text-primary);color:var(--bg-page);border-color:var(--text-primary)}
+    .d-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    .d-full{grid-column:1/-1}
+    .card{background:var(--bg-card);border-radius:var(--radius-lg);padding:20px;border:1px solid var(--border)}
+    .card-title{font-size:11px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+    .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:middle}
+    .bar-bg{width:100%;height:5px;background:var(--bg-surface);border-radius:3px;margin-top:4px}.bar{height:5px;border-radius:3px}
+    .ch-tag{display:inline-block;padding:2px 10px;border-radius:6px;font-size:11px;font-weight:600}
+    .ch-meta{background:var(--green-light);color:var(--green-dark)}.ch-google{background:var(--blue-light);color:var(--blue-dark)}
+    @media(max-width:800px){.kpi-row,.kpi-row-5{grid-template-columns:repeat(2,1fr)}.d-grid,.problem-grid,.track-grid,.vs-grid{grid-template-columns:1fr}.vs-arrow{display:none}.nav-tabs{display:none}}
   </style>
 </head>
 <body>
-
-  <nav class="nav">
-    <div class="nav-left">
-      <div class="nav-logo"><span>Conversal</span> dashboard</div>
-      <div class="nav-sep"></div>
-      <div class="nav-tabs">
-        <button class="nav-tab active">Overzicht</button>
-        <button class="nav-tab">Google Ads</button>
-        <button class="nav-tab">Meta Ads</button>
-        <button class="nav-tab">SEO</button>
-        <button class="nav-tab">Social</button>
-      </div>
+<nav class="nav">
+  <div class="nav-left">
+    <div class="nav-logo"><span>Conversal</span> dashboard</div>
+    <div class="nav-sep"></div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-section="analyse">Analyse</button>
+      <button class="nav-tab" data-section="dashboard">Dashboard preview</button>
     </div>
-    <div class="nav-right">
-      <div class="nav-avatar">AV</div>
-      <div class="nav-user">Arno Vanderstraeten — regio Aalst</div>
-    </div>
-  </nav>
-
-  <div class="dashboard">
-
-    <div class="filters">
-      <span class="filter-label">Vestiging</span>
-      <button class="filter-chip active">Alle vestigingen</button>
-      <button class="filter-chip">Aalst</button>
-      <button class="filter-chip">Asse</button>
-      <button class="filter-chip">Grimbergen</button>
-      <button class="filter-chip">Sint-Pieters-Leeuw</button>
-      <div class="filter-spacer"></div>
-      <div class="period-group">
-        <button class="period-btn">7d</button>
-        <button class="period-btn active">30d</button>
-        <button class="period-btn">90d</button>
-        <button class="period-btn">YTD</button>
-      </div>
-    </div>
-
-    <div class="kpi-row">
-      <div class="kpi">
-        <div class="kpi-label">Leads totaal</div>
-        <div class="kpi-value">47</div>
-        <div class="kpi-delta kpi-up">+12% vs vorige periode</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Cost per lead (blended)</div>
-        <div class="kpi-value">&euro;78</div>
-        <div class="kpi-delta kpi-up">-15% vs vorige periode</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Advertentie-uitgave</div>
-        <div class="kpi-value">&euro;3.666</div>
-        <div class="kpi-delta kpi-neutral">van &euro;12.500 budget</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Offertes verstuurd</div>
-        <div class="kpi-value">23</div>
-        <div class="kpi-delta kpi-up">49% conversieratio</div>
-      </div>
-      <div class="kpi">
-        <div class="kpi-label">Geschatte pipelinewaarde</div>
-        <div class="kpi-value">&euro;805k</div>
-        <div class="kpi-delta kpi-up">+18% vs vorige periode</div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="card-title">Leadtrend per week</div>
-        <div class="chart-wrap" style="height:200px"><canvas id="c1"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Leads per kanaal</div>
-        <div class="legend">
-          <span class="legend-item"><span class="legend-sq" style="background:#1D9E75"></span>Meta 22</span>
-          <span class="legend-item"><span class="legend-sq" style="background:#378ADD"></span>Google 14</span>
-          <span class="legend-item"><span class="legend-sq" style="background:#EF9F27"></span>Organisch 7</span>
-          <span class="legend-item"><span class="legend-sq" style="background:#B4B2A9"></span>Direct 4</span>
-        </div>
-        <div class="chart-wrap" style="height:170px"><canvas id="c2"></canvas></div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="card-title">Performance per vestiging</div>
-        <table class="tbl">
-          <thead>
-            <tr><th style="text-align:left">Vestiging</th><th>Leads</th><th>CPL</th><th>Uitgave</th><th>Conv. %</th><th style="min-width:80px">Trend</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="dot" style="background:#639922"></span>Aalst</td>
-              <td>18</td><td>&euro;71</td><td>&euro;1.278</td><td>56%</td>
-              <td><div class="bar-bg"><div class="bar" style="width:75%;background:#639922"></div></div></td>
-            </tr>
-            <tr>
-              <td><span class="dot" style="background:#639922"></span>Asse</td>
-              <td>14</td><td>&euro;82</td><td>&euro;1.148</td><td>50%</td>
-              <td><div class="bar-bg"><div class="bar" style="width:58%;background:#639922"></div></div></td>
-            </tr>
-            <tr>
-              <td><span class="dot" style="background:#EF9F27"></span>Grimbergen</td>
-              <td>9</td><td>&euro;94</td><td>&euro;846</td><td>44%</td>
-              <td><div class="bar-bg"><div class="bar" style="width:38%;background:#EF9F27"></div></div></td>
-            </tr>
-            <tr>
-              <td><span class="dot" style="background:#E24B4A"></span>Sint-Pieters-Leeuw</td>
-              <td>6</td><td>&euro;118</td><td>&euro;708</td><td>33%</td>
-              <td><div class="bar-bg"><div class="bar" style="width:25%;background:#E24B4A"></div></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card">
-        <div class="card-title">CPL per kanaal per vestiging</div>
-        <div class="legend">
-          <span class="legend-item"><span class="legend-sq" style="background:#1D9E75"></span>Meta</span>
-          <span class="legend-item"><span class="legend-sq" style="background:#378ADD"></span>Google</span>
-        </div>
-        <div class="chart-wrap" style="height:210px"><canvas id="c3"></canvas></div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card grid-full">
-        <div class="card-title">Campagne-detail</div>
-        <table class="tbl">
-          <thead>
-            <tr><th style="text-align:left">Campagne</th><th>Kanaal</th><th>Vestiging</th><th>Impressies</th><th>Klikken</th><th>CTR</th><th>Leads</th><th>CPL</th><th>Uitgave</th></tr>
-          </thead>
-          <tbody>
-            <tr><td style="text-align:left">Ramen renovatie</td><td><span class="ch-tag ch-meta">Meta</span></td><td>Aalst</td><td>24.300</td><td>412</td><td>1,7%</td><td>11</td><td>&euro;68</td><td>&euro;748</td></tr>
-            <tr><td style="text-align:left">Deuren op maat</td><td><span class="ch-tag ch-meta">Meta</span></td><td>Asse</td><td>18.700</td><td>298</td><td>1,6%</td><td>8</td><td>&euro;79</td><td>&euro;632</td></tr>
-            <tr><td style="text-align:left">Ramen plaatsen regio</td><td><span class="ch-tag ch-google">Google</span></td><td>Aalst</td><td>9.200</td><td>187</td><td>2,0%</td><td>7</td><td>&euro;76</td><td>&euro;530</td></tr>
-            <tr><td style="text-align:left">Deuren + ramen breed</td><td><span class="ch-tag ch-google">Google</span></td><td>Asse</td><td>7.800</td><td>142</td><td>1,8%</td><td>5</td><td>&euro;103</td><td>&euro;516</td></tr>
-            <tr><td style="text-align:left">Showroom bezoek</td><td><span class="ch-tag ch-meta">Meta</span></td><td>Grimbergen</td><td>15.400</td><td>201</td><td>1,3%</td><td>4</td><td>&euro;104</td><td>&euro;416</td></tr>
-            <tr><td style="text-align:left">Rolluiken + screens</td><td><span class="ch-tag ch-google">Google</span></td><td>S-P-Leeuw</td><td>6.100</td><td>98</td><td>1,6%</td><td>3</td><td>&euro;121</td><td>&euro;362</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="card-title">Organisch verkeer — showroompagina's</div>
-        <div class="legend">
-          <span class="legend-item"><span class="legend-sq" style="background:#378ADD"></span>Aalst</span>
-          <span class="legend-item"><span class="legend-sq" style="background:#1D9E75"></span>Asse</span>
-          <span class="legend-item"><span class="legend-sq" style="background:#EF9F27"></span>Grimbergen</span>
-          <span class="legend-item"><span class="legend-sq" style="background:#E24B4A"></span>S-P-Leeuw</span>
-        </div>
-        <div class="chart-wrap" style="height:180px"><canvas id="c4"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Top zoekwoorden (organisch)</div>
-        <table class="tbl">
-          <thead><tr><th style="text-align:left">Zoekwoord</th><th>Volume</th><th>Positie</th><th>Klikken</th></tr></thead>
-          <tbody>
-            <tr><td style="text-align:left">belisol aalst</td><td>110</td><td>1</td><td>58</td></tr>
-            <tr><td style="text-align:left">ramen aalst</td><td>170</td><td>8</td><td>12</td></tr>
-            <tr><td style="text-align:left">ramen plaatsen aalst</td><td>90</td><td>6</td><td>8</td></tr>
-            <tr><td style="text-align:left">deuren asse</td><td>70</td><td>12</td><td>3</td></tr>
-            <tr><td style="text-align:left">belisol grimbergen</td><td>50</td><td>1</td><td>24</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
+  <div class="nav-right"><div class="nav-avatar">AV</div><div class="nav-user">Arno Vanderstraeten</div></div>
+</nav>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script>
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const gc = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)';
-    const tc = isDark ? '#6b6b66' : '#9c9a92';
+<div class="section active" id="analyse"><div class="container">
+  <div class="slide">
+    <div class="s-label">Belisol.be — organisch verkeer</div>
+    <div class="s-title">Van 100.000 naar 21.000 bezoekers. In minder dan een jaar.</div>
+    <div class="s-sub">Na een website-migratie in oktober 2024 is belisol.be bijna 80% van het organisch verkeer kwijtgeraakt. De keyword-posities zijn gekelderd van 9.000+ naar 3.279.</div>
+    <div class="kpi-row">
+      <div class="kpi-card"><div class="kpi-lab">Organisch verkeer</div><div class="kpi-val red">20.942</div><div class="kpi-delta">was 100.000+</div></div>
+      <div class="kpi-card"><div class="kpi-lab">Domain authority</div><div class="kpi-val">30</div></div>
+      <div class="kpi-card"><div class="kpi-lab">Organische keywords</div><div class="kpi-val red">3.279</div><div class="kpi-delta">was 9.000+</div></div>
+      <div class="kpi-card"><div class="kpi-lab">Backlinks</div><div class="kpi-val">21.486</div></div>
+    </div>
+    <div class="legend"><span class="legend-item"><span class="legend-sq" style="background:var(--red)"></span>Organisch verkeer belisol.be</span></div>
+    <div class="chart-wrap" style="height:260px"><canvas id="s1-chart"></canvas></div>
+    <div class="insight insight-red">Vermoedelijke oorzaak: website-migratie in oktober/november 2024 zonder correcte redirects. Het verkeer is sindsdien niet hersteld. Elke maand dat dit niet wordt opgelost, verliest Belisol duizenden potentiele klanten aan concurrenten.</div>
+  </div>
+  <div class="slide">
+    <div class="s-label">Gemiste kansen — hoog volume keywords</div>
+    <div class="s-title">Belisol rankt, maar buiten pagina 1.</div>
+    <div class="s-sub">Tientallen keywords met hoog zoekvolume staan op positie 10+ — onzichtbaar voor de zoeker.</div>
+    <table class="tbl">
+      <thead><tr><th>Keyword</th><th>Volume</th><th>Huidige positie</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>deur ramen</td><td>6.600 <span class="vol-bar" style="width:80px"></span></td><td><span class="pos-bad">Positie 15</span></td><td style="font-size:12px;color:var(--text-tertiary)">8 bezoeken ipv 600+</td></tr>
+        <tr><td>vliegenraam</td><td>5.400 <span class="vol-bar" style="width:66px"></span></td><td><span class="pos-bad">Positie 15</span></td><td style="font-size:12px;color:var(--text-tertiary)">5 bezoeken</td></tr>
+        <tr><td>rolluiken</td><td>5.400 <span class="vol-bar" style="width:66px"></span></td><td><span class="pos-bad">Positie 16</span></td><td style="font-size:12px;color:var(--text-tertiary)">4 bezoeken</td></tr>
+        <tr><td>pvc</td><td>2.900 <span class="vol-bar" style="width:36px"></span></td><td><span class="pos-bad">Positie 17</span></td><td style="font-size:12px;color:var(--text-tertiary)">2 bezoeken</td></tr>
+        <tr><td>voordeur</td><td>2.400 <span class="vol-bar" style="width:30px"></span></td><td><span class="pos-ok">Positie 9</span></td><td style="font-size:12px;color:var(--text-tertiary)">2 bezoeken</td></tr>
+        <tr><td>voorzetrolluiken</td><td>1.600 <span class="vol-bar" style="width:20px"></span></td><td><span class="pos-bad">Positie 13</span></td><td style="font-size:12px;color:var(--text-tertiary)">3 bezoeken</td></tr>
+        <tr><td>ramen kopen</td><td>590 <span class="vol-bar" style="width:8px"></span></td><td><span class="pos-none">Positie 48</span></td><td style="font-size:12px;color:var(--text-tertiary)">0 bezoeken</td></tr>
+        <tr><td>ramen en deuren pvc</td><td>590 <span class="vol-bar" style="width:8px"></span></td><td><span class="pos-ok">Positie 10</span></td><td style="font-size:12px;color:var(--text-tertiary)">1 bezoek</td></tr>
+      </tbody>
+    </table>
+    <div class="insight insight-amber">Totaal onbenut zoekvolume op deze 8 keywords alleen al: ~25.480 zoekopdrachten per maand. Met correcte redirects, technische fixes en gerichte content kan een groot deel hiervan teruggewonnen worden.</div>
+  </div>
+  <div class="slide">
+    <div class="s-label">Regionale marketing</div>
+    <div class="s-title">&euro;150.000 budget, maar geen lokale aanpak.</div>
+    <div class="s-sub">De advertenties combineren vier vestigingen in een campagne. Lokale pagina's zijn inactief. Het budget wordt breed ingezet zonder regionale meetbaarheid.</div>
+    <div class="problem-grid">
+      <div class="problem-card"><div class="problem-num">&euro;92</div><div class="problem-label">Cost per lead via Meta</div><div class="problem-ctx">Bij gem. orderwaarde van &euro;35.000</div></div>
+      <div class="problem-card"><div class="problem-num">&euro;117</div><div class="problem-label">Cost per lead via Google</div><div class="problem-ctx">Zonder inzicht per vestiging</div></div>
+      <div class="problem-card"><div class="problem-num">10</div><div class="problem-label">Volgers Belisol Aalst (Facebook)</div><div class="problem-ctx">Geen actieve posts</div></div>
+      <div class="problem-card"><div class="problem-num">&euro;11.000</div><div class="problem-label">Flyeractie zonder resultaat</div><div class="problem-ctx">85.000 brievenbussen, 0 return</div></div>
+    </div>
+    <div class="vs-grid">
+      <div class="vs-card"><span class="vs-badge vs-bad">Nu</span><div class="vs-title">Gecombineerde campagnes</div><div class="vs-item">4 vestigingen in 1 advertentie</div><div class="vs-item">Niet meetbaar per regio</div><div class="vs-item">Lokale pagina's ongebruikt</div><div class="vs-item">Verspilde impressies buiten bereik</div></div>
+      <div class="vs-arrow">&rarr;</div>
+      <div class="vs-card"><span class="vs-badge vs-good">Aanbeveling</span><div class="vs-title">Per vestiging campagnes</div><div class="vs-item">Aparte ad sets per showroom</div><div class="vs-item">Lokale targeting (15-20km radius)</div><div class="vs-item">Lokale Facebook-pagina's actief</div><div class="vs-item">CPL per vestiging meetbaar</div></div>
+    </div>
+    <div class="insight insight-green">Iemand in Aalst heeft geen boodschap aan een advertentie die ook Asse, Grimbergen en Sint-Pieters-Leeuw noemt. Lokale campagnes voelen persoonlijker, converteren beter, en geven inzicht in welke regio het sterkst presteert.</div>
+  </div>
+  <div class="slide">
+    <div class="s-label">Aanbevelingen</div>
+    <div class="s-title">Drie sporen om Belisol regionaal weer op de kaart te zetten.</div>
+    <div class="s-sub">Elk spoor pakt een ander deel van het probleem aan. Samen zorgen ze voor herstel van organisch verkeer, lagere cost per lead, en meetbare regionale resultaten.</div>
+    <div class="track-grid">
+      <div class="track"><span class="track-badge track-urgent">Urgent</span><div class="track-title">SEO-herstel</div><div class="track-item">Redirect-audit: welke URL's zijn gebroken na de migratie</div><div class="track-item">Technische SEO-analyse (indexering, canonical tags, sitemap)</div><div class="track-item">Keyword-posities herstellen voor 25.000+ maandelijks zoekvolume</div><div class="track-item">Content-optimalisatie van bestaande pagina's</div><div class="track-impact">Impact: van 21k terug richting 60-80k organisch verkeer</div></div>
+      <div class="track"><span class="track-badge track-growth">Groei</span><div class="track-title">Lokale campagnestrategie</div><div class="track-item">Per vestiging aparte Meta- en Google-campagnes</div><div class="track-item">Lokale Facebook-pagina's activeren en content plannen</div><div class="track-item">Regionale targeting met radius per showroom</div><div class="track-item">CPL per vestiging meetbaar maken</div><div class="track-impact">Impact: lagere CPL, hogere relevantie, meetbare ROI per filiaal</div></div>
+    </div>
+    <div class="track" style="margin-bottom:24px"><span class="track-badge track-insight">Inzicht</span><div class="track-title">Management dashboard</div><div class="track-item">Looker Studio platform met login per franchisenemer</div><div class="track-item">Real-time resultaten per regio: leads, CPL, conversies, campagne-performance</div><div class="track-item">Geen afhankelijkheid van rapportage door hoofdkantoor</div><div class="track-item">Data-transparantie als basis voor betere beslissingen</div><div class="track-impact">Impact: data-driven sturing zonder extra personeel</div></div>
+    <div style="text-align:center"><button class="cta-btn" onclick="switchTo('dashboard')">Bekijk dashboard preview &rarr;</button></div>
+  </div>
+</div></div>
 
-    const baseScales = {
-      x: { grid: { color: gc, drawBorder: false }, ticks: { color: tc, font: { size: 11, family: "'DM Sans', sans-serif" } } },
-      y: { grid: { color: gc, drawBorder: false }, ticks: { color: tc, font: { size: 11, family: "'DM Sans', sans-serif" } }, beginAtZero: true }
-    };
-    const baseOpts = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, backgroundColor: isDark ? '#333' : '#1a1a18', titleFont: { family: "'DM Sans'" }, bodyFont: { family: "'DM Sans'" }, cornerRadius: 8, padding: 10 } }
-    };
+<div class="section" id="dashboard"><div class="container">
+  <div class="filters">
+    <span class="filter-label">Vestiging</span>
+    <button class="filter-chip active">Alle vestigingen</button><button class="filter-chip">Aalst</button><button class="filter-chip">Asse</button><button class="filter-chip">Grimbergen</button><button class="filter-chip">Sint-Pieters-Leeuw</button>
+    <div class="filter-spacer"></div>
+    <div class="period-group"><button class="period-btn">7d</button><button class="period-btn active">30d</button><button class="period-btn">90d</button><button class="period-btn">YTD</button></div>
+  </div>
+  <div class="kpi-row kpi-row-5">
+    <div class="kpi-card"><div class="kpi-lab">Leads totaal</div><div class="kpi-val">47</div><div class="kpi-delta" style="color:var(--green-dark)">+12% vs vorige periode</div></div>
+    <div class="kpi-card"><div class="kpi-lab">Cost per lead (blended)</div><div class="kpi-val">&euro;78</div><div class="kpi-delta" style="color:var(--green-dark)">-15% vs vorige periode</div></div>
+    <div class="kpi-card"><div class="kpi-lab">Advertentie-uitgave</div><div class="kpi-val">&euro;3.666</div><div class="kpi-delta" style="color:var(--text-tertiary)">van &euro;12.500 budget</div></div>
+    <div class="kpi-card"><div class="kpi-lab">Offertes verstuurd</div><div class="kpi-val">23</div><div class="kpi-delta" style="color:var(--green-dark)">49% conversieratio</div></div>
+    <div class="kpi-card"><div class="kpi-lab">Geschatte pipelinewaarde</div><div class="kpi-val">&euro;805k</div><div class="kpi-delta" style="color:var(--green-dark)">+18% vs vorige periode</div></div>
+  </div>
+  <div class="d-grid">
+    <div class="card"><div class="card-title">Leadtrend per week</div><div class="chart-wrap" style="height:200px"><canvas id="d-c1"></canvas></div></div>
+    <div class="card"><div class="card-title">Leads per kanaal</div><div class="legend"><span class="legend-item"><span class="legend-sq" style="background:var(--green)"></span>Meta 22</span><span class="legend-item"><span class="legend-sq" style="background:var(--blue)"></span>Google 14</span><span class="legend-item"><span class="legend-sq" style="background:var(--amber)"></span>Organisch 7</span><span class="legend-item"><span class="legend-sq" style="background:var(--gray)"></span>Direct 4</span></div><div class="chart-wrap" style="height:170px"><canvas id="d-c2"></canvas></div></div>
+  </div>
+  <div class="d-grid">
+    <div class="card"><div class="card-title">Performance per vestiging</div><table class="tbl"><thead><tr><th style="text-align:left">Vestiging</th><th>Leads</th><th>CPL</th><th>Uitgave</th><th>Conv.%</th><th style="min-width:80px">Trend</th></tr></thead><tbody>
+      <tr><td><span class="dot" style="background:#639922"></span>Aalst</td><td>18</td><td>&euro;71</td><td>&euro;1.278</td><td>56%</td><td><div class="bar-bg"><div class="bar" style="width:75%;background:#639922"></div></div></td></tr>
+      <tr><td><span class="dot" style="background:#639922"></span>Asse</td><td>14</td><td>&euro;82</td><td>&euro;1.148</td><td>50%</td><td><div class="bar-bg"><div class="bar" style="width:58%;background:#639922"></div></div></td></tr>
+      <tr><td><span class="dot" style="background:var(--amber)"></span>Grimbergen</td><td>9</td><td>&euro;94</td><td>&euro;846</td><td>44%</td><td><div class="bar-bg"><div class="bar" style="width:38%;background:var(--amber)"></div></div></td></tr>
+      <tr><td><span class="dot" style="background:var(--red)"></span>Sint-Pieters-Leeuw</td><td>6</td><td>&euro;118</td><td>&euro;708</td><td>33%</td><td><div class="bar-bg"><div class="bar" style="width:25%;background:var(--red)"></div></div></td></tr>
+    </tbody></table></div>
+    <div class="card"><div class="card-title">CPL per kanaal per vestiging</div><div class="legend"><span class="legend-item"><span class="legend-sq" style="background:var(--green)"></span>Meta</span><span class="legend-item"><span class="legend-sq" style="background:var(--blue)"></span>Google</span></div><div class="chart-wrap" style="height:210px"><canvas id="d-c3"></canvas></div></div>
+  </div>
+  <div class="d-grid">
+    <div class="card d-full"><div class="card-title">Campagne-detail</div><table class="tbl"><thead><tr><th style="text-align:left">Campagne</th><th>Kanaal</th><th>Vestiging</th><th>Impressies</th><th>Klikken</th><th>CTR</th><th>Leads</th><th>CPL</th><th>Uitgave</th></tr></thead><tbody>
+      <tr><td style="text-align:left">Ramen renovatie</td><td><span class="ch-tag ch-meta">Meta</span></td><td>Aalst</td><td>24.300</td><td>412</td><td>1,7%</td><td>11</td><td>&euro;68</td><td>&euro;748</td></tr>
+      <tr><td style="text-align:left">Deuren op maat</td><td><span class="ch-tag ch-meta">Meta</span></td><td>Asse</td><td>18.700</td><td>298</td><td>1,6%</td><td>8</td><td>&euro;79</td><td>&euro;632</td></tr>
+      <tr><td style="text-align:left">Ramen plaatsen regio</td><td><span class="ch-tag ch-google">Google</span></td><td>Aalst</td><td>9.200</td><td>187</td><td>2,0%</td><td>7</td><td>&euro;76</td><td>&euro;530</td></tr>
+      <tr><td style="text-align:left">Deuren + ramen breed</td><td><span class="ch-tag ch-google">Google</span></td><td>Asse</td><td>7.800</td><td>142</td><td>1,8%</td><td>5</td><td>&euro;103</td><td>&euro;516</td></tr>
+      <tr><td style="text-align:left">Showroom bezoek</td><td><span class="ch-tag ch-meta">Meta</span></td><td>Grimbergen</td><td>15.400</td><td>201</td><td>1,3%</td><td>4</td><td>&euro;104</td><td>&euro;416</td></tr>
+      <tr><td style="text-align:left">Rolluiken + screens</td><td><span class="ch-tag ch-google">Google</span></td><td>S-P-Leeuw</td><td>6.100</td><td>98</td><td>1,6%</td><td>3</td><td>&euro;121</td><td>&euro;362</td></tr>
+    </tbody></table></div>
+  </div>
+  <div class="d-grid">
+    <div class="card"><div class="card-title">Organisch verkeer — showroompagina's</div><div class="legend"><span class="legend-item"><span class="legend-sq" style="background:var(--blue)"></span>Aalst</span><span class="legend-item"><span class="legend-sq" style="background:var(--green)"></span>Asse</span><span class="legend-item"><span class="legend-sq" style="background:var(--amber)"></span>Grimbergen</span><span class="legend-item"><span class="legend-sq" style="background:var(--red)"></span>S-P-Leeuw</span></div><div class="chart-wrap" style="height:180px"><canvas id="d-c4"></canvas></div></div>
+    <div class="card"><div class="card-title">Top zoekwoorden (organisch)</div><table class="tbl"><thead><tr><th style="text-align:left">Zoekwoord</th><th>Volume</th><th>Positie</th><th>Klikken</th></tr></thead><tbody>
+      <tr><td style="text-align:left">belisol aalst</td><td>110</td><td>1</td><td>58</td></tr>
+      <tr><td style="text-align:left">ramen aalst</td><td>170</td><td>8</td><td>12</td></tr>
+      <tr><td style="text-align:left">ramen plaatsen aalst</td><td>90</td><td>6</td><td>8</td></tr>
+      <tr><td style="text-align:left">deuren asse</td><td>70</td><td>12</td><td>3</td></tr>
+      <tr><td style="text-align:left">belisol grimbergen</td><td>50</td><td>1</td><td>24</td></tr>
+    </tbody></table></div>
+  </div>
+</div></div>
 
-    // Lead trend
-    new Chart(document.getElementById('c1'), {
-      type: 'line',
-      data: {
-        labels: ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],
-        datasets: [{
-          data: [8,10,9,12,11,14,10,13,15,12,14,16],
-          borderColor: '#1D9E75', backgroundColor: 'rgba(29,158,117,0.08)',
-          borderWidth: 2, tension: 0.35, pointRadius: 3, pointBackgroundColor: '#1D9E75', fill: true
-        }]
-      },
-      options: { ...baseOpts, scales: baseScales }
-    });
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+const dk=window.matchMedia('(prefers-color-scheme:dark)').matches;
+const gc=dk?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)';
+const tc=dk?'#6b6b66':'#9c9a92';
+const bs={x:{grid:{color:gc,drawBorder:false},ticks:{color:tc,font:{size:11,family:"'DM Sans',sans-serif"}}},y:{grid:{color:gc,drawBorder:false},ticks:{color:tc,font:{size:11,family:"'DM Sans',sans-serif"}},beginAtZero:true}};
+const bo={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:dk?'#333':'#1a1a18',titleFont:{family:"'DM Sans'"},bodyFont:{family:"'DM Sans'"},cornerRadius:8,padding:10}}};
 
-    // Leads per kanaal
-    new Chart(document.getElementById('c2'), {
-      type: 'bar',
-      data: {
-        labels: ['Meta','Google','Organisch','Direct'],
-        datasets: [{ data: [22,14,7,4], backgroundColor: ['#1D9E75','#378ADD','#EF9F27','#B4B2A9'], borderRadius: 6, maxBarThickness: 48 }]
-      },
-      options: { ...baseOpts, scales: baseScales }
-    });
+new Chart(document.getElementById('s1-chart'),{type:'line',data:{labels:['Apr 24','Mei 24','Jun 24','Aug 24','Okt 24','Dec 24','Feb 25','Apr 25','Jun 25','Aug 25','Okt 25','Dec 25','Feb 26'],datasets:[{data:[65000,100000,90000,55000,45000,30000,28000,27000,25000,22000,18000,15000,20942],borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.08)',borderWidth:2.5,tension:.3,pointRadius:3,pointBackgroundColor:'#E24B4A',fill:true}]},options:{...bo,scales:{...bs,y:{...bs.y,min:0,max:120000,ticks:{...bs.y.ticks,callback:v=>(v/1000)+'k'}}}}});
+new Chart(document.getElementById('d-c1'),{type:'line',data:{labels:['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],datasets:[{data:[8,10,9,12,11,14,10,13,15,12,14,16],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',borderWidth:2,tension:.35,pointRadius:3,pointBackgroundColor:'#1D9E75',fill:true}]},options:{...bo,scales:bs}});
+new Chart(document.getElementById('d-c2'),{type:'bar',data:{labels:['Meta','Google','Organisch','Direct'],datasets:[{data:[22,14,7,4],backgroundColor:['#1D9E75','#378ADD','#EF9F27','#B4B2A9'],borderRadius:6,maxBarThickness:48}]},options:{...bo,scales:bs}});
+new Chart(document.getElementById('d-c3'),{type:'bar',data:{labels:['Aalst','Asse','Grimbergen','S-P-Leeuw'],datasets:[{label:'Meta',data:[62,79,104,0],backgroundColor:'#1D9E75',borderRadius:6,maxBarThickness:32},{label:'Google',data:[76,103,0,121],backgroundColor:'#378ADD',borderRadius:6,maxBarThickness:32}]},options:{...bo,scales:{...bs,x:{...bs.x,ticks:{...bs.x.ticks,autoSkip:false}}},plugins:{...bo.plugins,tooltip:{...bo.plugins.tooltip,callbacks:{label:ctx=>ctx.dataset.label+': \u20AC'+ctx.raw}}}}});
+new Chart(document.getElementById('d-c4'),{type:'line',data:{labels:['Okt','Nov','Dec','Jan','Feb','Mrt'],datasets:[{label:'Aalst',data:[320,180,95,78,62,58],borderColor:'#378ADD',borderWidth:2,tension:.3,pointRadius:3},{label:'Asse',data:[280,160,88,72,55,48],borderColor:'#1D9E75',borderWidth:2,tension:.3,pointRadius:3},{label:'Grimbergen',data:[190,110,62,48,38,32],borderColor:'#EF9F27',borderWidth:2,tension:.3,pointRadius:3},{label:'S-P-Leeuw',data:[150,85,48,35,28,22],borderColor:'#E24B4A',borderWidth:2,tension:.3,pointRadius:3}]},options:{...bo,scales:bs}});
 
-    // CPL per vestiging per kanaal
-    new Chart(document.getElementById('c3'), {
-      type: 'bar',
-      data: {
-        labels: ['Aalst','Asse','Grimbergen','S-P-Leeuw'],
-        datasets: [
-          { label: 'Meta', data: [62,79,104,0], backgroundColor: '#1D9E75', borderRadius: 6, maxBarThickness: 32 },
-          { label: 'Google', data: [76,103,0,121], backgroundColor: '#378ADD', borderRadius: 6, maxBarThickness: 32 }
-        ]
-      },
-      options: {
-        ...baseOpts,
-        scales: { ...baseScales, x: { ...baseScales.x, ticks: { ...baseScales.x.ticks, autoSkip: false } } },
-        plugins: { ...baseOpts.plugins, tooltip: { ...baseOpts.plugins.tooltip, callbacks: { label: ctx => ctx.dataset.label + ': \u20AC' + ctx.raw } } }
-      }
-    });
-
-    // Organisch per showroom
-    new Chart(document.getElementById('c4'), {
-      type: 'line',
-      data: {
-        labels: ['Okt','Nov','Dec','Jan','Feb','Mrt'],
-        datasets: [
-          { label: 'Aalst', data: [320,180,95,78,62,58], borderColor: '#378ADD', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-          { label: 'Asse', data: [280,160,88,72,55,48], borderColor: '#1D9E75', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-          { label: 'Grimbergen', data: [190,110,62,48,38,32], borderColor: '#EF9F27', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-          { label: 'S-P-Leeuw', data: [150,85,48,35,28,22], borderColor: '#E24B4A', borderWidth: 2, tension: 0.3, pointRadius: 3 }
-        ]
-      },
-      options: { ...baseOpts, scales: baseScales }
-    });
-
-    // Interactive filter chips
-    document.querySelectorAll('.filter-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-      });
-    });
-    document.querySelectorAll('.period-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-      });
-    });
-  </script>
-
+function switchTo(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav-tab').forEach(t=>{t.classList.remove('active');if(t.dataset.section===id)t.classList.add('active')});window.scrollTo(0,0)}
+document.querySelectorAll('.nav-tab[data-section]').forEach(t=>{t.addEventListener('click',()=>switchTo(t.dataset.section))});
+document.querySelectorAll('.filter-chip').forEach(c=>{c.addEventListener('click',()=>{document.querySelectorAll('.filter-chip').forEach(x=>x.classList.remove('active'));c.classList.add('active')})});
+document.querySelectorAll('.period-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.period-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')})});
+</script>
 </body>
 </html>
