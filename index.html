@@ -59,6 +59,7 @@
     .vol-bar{display:inline-block;height:6px;border-radius:3px;background:var(--red);vertical-align:middle;margin-left:6px}
     .insight{border-radius:var(--radius);padding:14px 16px;font-size:13px;line-height:1.5;margin-top:16px}
     .insight-red{background:var(--red-light);color:#791F1F}.insight-amber{background:var(--amber-light);color:#633806}.insight-green{background:var(--green-light);color:#085041}
+    .source-note{font-size:11px;color:var(--text-tertiary);margin-top:10px;font-style:italic}
     .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
     .problem-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px}
     .problem-num{font-size:28px;font-weight:600;color:var(--red);margin-bottom:4px}
@@ -118,25 +119,34 @@
   <div class="nav-right"><div class="nav-avatar">AV</div><div class="nav-user">Arno Vanderstraeten</div></div>
 </nav>
 
+<!-- ==================== ANALYSE ==================== -->
 <div class="section active" id="analyse"><div class="container">
+
+  <!-- SLIDE 1: SEO CRASH -->
   <div class="slide">
     <div class="s-label">Belisol.be — organisch verkeer</div>
-    <div class="s-title">Van 100.000 naar 21.000 bezoekers. In minder dan een jaar.</div>
-    <div class="s-sub">Na een website-migratie in oktober 2024 is belisol.be bijna 80% van het organisch verkeer kwijtgeraakt. De keyword-posities zijn gekelderd van 9.000+ naar 3.279.</div>
+    <div class="s-title">Van ~50.000 naar ~21.000 bezoekers. In minder dan twee jaar.</div>
+    <div class="s-sub">Belisol.be piekte rond 40.000-57.000 organische bezoekers (afhankelijk van de bron). Vandaag staat de teller op ~21.000. Dat is een daling van meer dan 50%. Tegelijk zijn de keyword-posities gedaald van ~3.800 naar ~3.279.</div>
     <div class="kpi-row">
-      <div class="kpi-card"><div class="kpi-lab">Organisch verkeer</div><div class="kpi-val red">20.942</div><div class="kpi-delta">was 100.000+</div></div>
+      <div class="kpi-card"><div class="kpi-lab">Organisch verkeer</div><div class="kpi-val red">20.942</div><div class="kpi-delta">was 40.000-57.000</div></div>
       <div class="kpi-card"><div class="kpi-lab">Domain authority</div><div class="kpi-val">30</div></div>
-      <div class="kpi-card"><div class="kpi-lab">Organische keywords</div><div class="kpi-val red">3.279</div><div class="kpi-delta">was 9.000+</div></div>
-      <div class="kpi-card"><div class="kpi-lab">Backlinks</div><div class="kpi-val">21.486</div></div>
+      <div class="kpi-card"><div class="kpi-lab">Organische keywords</div><div class="kpi-val red">3.279</div><div class="kpi-delta">was ~3.800</div></div>
+      <div class="kpi-card"><div class="kpi-lab">Backlinks</div><div class="kpi-val">21.481</div></div>
     </div>
-    <div class="legend"><span class="legend-item"><span class="legend-sq" style="background:var(--red)"></span>Organisch verkeer belisol.be</span></div>
-    <div class="chart-wrap" style="height:260px"><canvas id="s1-chart"></canvas></div>
-    <div class="insight insight-red">Vermoedelijke oorzaak: website-migratie in oktober/november 2024 zonder correcte redirects. Het verkeer is sindsdien niet hersteld. Elke maand dat dit niet wordt opgelost, verliest Belisol duizenden potentiele klanten aan concurrenten.</div>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-sq" style="background:var(--blue)"></span>Organisch verkeer (Semrush)</span>
+      <span class="legend-item"><span class="legend-sq" style="background:var(--red)"></span>Organisch verkeer (Ubersuggest)</span>
+    </div>
+    <div class="chart-wrap" style="height:280px"><canvas id="s1-chart"></canvas></div>
+    <div class="source-note">Bronnen: Semrush (all time traffic) en Ubersuggest (april 2026). Exacte volumes verschillen per tool door verschil in meetmethode, crawlfrequentie en schattingsmodel. Deze cijfers geven een indicatie van de trend — voor exacte bezoekersaantallen is toegang tot Google Analytics / Search Console nodig.</div>
+    <div class="insight insight-red">De daling heeft waarschijnlijk meerdere oorzaken. Een website-migratie zonder correcte redirects kan een factor zijn (de timing rond okt/nov 2024 suggereert dit). Maar ook de overgang naar GA4 (ander meetmodel), Google algorithm updates, en het groeiende effect van AI-zoektools (ChatGPT, AI Overviews) die steeds meer zoekverkeer van traditionele clicks weghalen, spelen een rol. Een grondige technische audit moet uitwijzen welke factoren bij Belisol het zwaarst wegen — pas dan kunnen we gericht ingrijpen.</div>
   </div>
+
+  <!-- SLIDE 2: KEYWORDS -->
   <div class="slide">
     <div class="s-label">Gemiste kansen — hoog volume keywords</div>
     <div class="s-title">Belisol rankt, maar buiten pagina 1.</div>
-    <div class="s-sub">Tientallen keywords met hoog zoekvolume staan op positie 10+ — onzichtbaar voor de zoeker.</div>
+    <div class="s-sub">Tientallen keywords met hoog zoekvolume staan op positie 10+ — onzichtbaar voor de zoeker. Dit is verkeer dat vroeger wel binnenkwam.</div>
     <table class="tbl">
       <thead><tr><th>Keyword</th><th>Volume</th><th>Huidige positie</th><th>Status</th></tr></thead>
       <tbody>
@@ -150,38 +160,46 @@
         <tr><td>ramen en deuren pvc</td><td>590 <span class="vol-bar" style="width:8px"></span></td><td><span class="pos-ok">Positie 10</span></td><td style="font-size:12px;color:var(--text-tertiary)">1 bezoek</td></tr>
       </tbody>
     </table>
+    <div class="source-note">Bron: Ubersuggest keyword export (april 2026). Volumes zijn geschatte maandelijkse zoekopdrachten (NL | BE). Werkelijke posities en volumes kunnen afwijken — Google Search Console geeft het definitieve beeld.</div>
     <div class="insight insight-amber">Totaal onbenut zoekvolume op deze 8 keywords alleen al: ~25.480 zoekopdrachten per maand. Met correcte redirects, technische fixes en gerichte content kan een groot deel hiervan teruggewonnen worden.</div>
   </div>
+
+  <!-- SLIDE 3: REGIONALE MARKETING -->
   <div class="slide">
     <div class="s-label">Regionale marketing</div>
-    <div class="s-title">&euro;150.000 budget, maar geen lokale aanpak.</div>
-    <div class="s-sub">De advertenties combineren vier vestigingen in een campagne. Lokale pagina's zijn inactief. Het budget wordt breed ingezet zonder regionale meetbaarheid.</div>
+    <div class="s-title">Regionaal actief, maar elke campagne combineert alle vier de vestigingen.</div>
+    <div class="s-sub">Belisol draait nationaal ~310 actieve campagnes via Meta. Daarvan zijn er 15 specifiek gericht op de regio van Arno (Aalst, Asse, Grimbergen, Sint-Pieters-Leeuw). Alle 15 combineren de vier vestigingen in dezelfde advertentie. Dat maakt het moeilijk om te meten welke vestiging het best presteert — en de boodschap voelt voor niemand echt lokaal.</div>
     <div class="problem-grid">
       <div class="problem-card"><div class="problem-num">&euro;92</div><div class="problem-label">Cost per lead via Meta</div><div class="problem-ctx">Bij gem. orderwaarde van &euro;35.000</div></div>
-      <div class="problem-card"><div class="problem-num">&euro;117</div><div class="problem-label">Cost per lead via Google</div><div class="problem-ctx">Zonder inzicht per vestiging</div></div>
-      <div class="problem-card"><div class="problem-num">10</div><div class="problem-label">Volgers Belisol Aalst (Facebook)</div><div class="problem-ctx">Geen actieve posts</div></div>
-      <div class="problem-card"><div class="problem-num">&euro;11.000</div><div class="problem-label">Flyeractie zonder resultaat</div><div class="problem-ctx">85.000 brievenbussen, 0 return</div></div>
+      <div class="problem-card"><div class="problem-num">&euro;117</div><div class="problem-label">Cost per lead via Google</div><div class="problem-ctx">Blended — niet inzichtelijk per vestiging</div></div>
+      <div class="problem-card"><div class="problem-num">15 van 15</div><div class="problem-label">Regionale ads met alle 4 steden</div><div class="problem-ctx">Geen enkele ad target 1 vestiging specifiek</div></div>
+      <div class="problem-card"><div class="problem-num">10</div><div class="problem-label">Volgers Belisol Aalst (Facebook)</div><div class="problem-ctx">Lokale pagina niet actief ingezet</div></div>
     </div>
     <div class="vs-grid">
-      <div class="vs-card"><span class="vs-badge vs-bad">Nu</span><div class="vs-title">Gecombineerde campagnes</div><div class="vs-item">4 vestigingen in 1 advertentie</div><div class="vs-item">Niet meetbaar per regio</div><div class="vs-item">Lokale pagina's ongebruikt</div><div class="vs-item">Verspilde impressies buiten bereik</div></div>
+      <div class="vs-card"><span class="vs-badge vs-bad">Nu</span><div class="vs-title">Regionaal zonder onderscheid</div><div class="vs-item">15 regionale ads, telkens 4 steden in dezelfde content</div><div class="vs-item">~310 nationale campagnes overlappen dezelfde regio's</div><div class="vs-item">CPL niet meetbaar per individuele vestiging</div><div class="vs-item">Lokale Facebook-pagina's niet ingezet voor advertising</div></div>
       <div class="vs-arrow">&rarr;</div>
-      <div class="vs-card"><span class="vs-badge vs-good">Aanbeveling</span><div class="vs-title">Per vestiging campagnes</div><div class="vs-item">Aparte ad sets per showroom</div><div class="vs-item">Lokale targeting (15-20km radius)</div><div class="vs-item">Lokale Facebook-pagina's actief</div><div class="vs-item">CPL per vestiging meetbaar</div></div>
+      <div class="vs-card"><span class="vs-badge vs-good">Kans</span><div class="vs-title">Per vestiging opsplitsen</div><div class="vs-item">Aparte ad sets per showroom met lokale copy</div><div class="vs-item">Gerichte targeting per vestiging (15-20km radius)</div><div class="vs-item">CPL per vestiging meetbaar in dashboard</div><div class="vs-item">Lokale pagina's activeren voor organisch en betaald bereik</div></div>
     </div>
-    <div class="insight insight-green">Iemand in Aalst heeft geen boodschap aan een advertentie die ook Asse, Grimbergen en Sint-Pieters-Leeuw noemt. Lokale campagnes voelen persoonlijker, converteren beter, en geven inzicht in welke regio het sterkst presteert.</div>
+    <div class="source-note">Bron: Meta-advertentiebibliotheek Belisol (april 2026), ~310 actieve campagnes waarvan 15 regionaal voor Aalst/Asse/Grimbergen/Sint-Pieters-Leeuw. CPL-data: opgave door klant (maart 2026).</div>
+    <div class="insight insight-green">Er is een regionale aanpak — dat is positief. De kans zit in het opsplitsen per vestiging: iemand in Aalst reageert sterker op een boodschap die specifiek over Belisol Aalst gaat dan op een ad die vier steden opsomt. Opsplitsen maakt ook meetbaar welke vestiging het sterkst presteert, zodat budget gerichter ingezet kan worden.</div>
   </div>
+
+  <!-- SLIDE 4: AANBEVELINGEN -->
   <div class="slide">
     <div class="s-label">Aanbevelingen</div>
     <div class="s-title">Drie sporen om Belisol regionaal weer op de kaart te zetten.</div>
     <div class="s-sub">Elk spoor pakt een ander deel van het probleem aan. Samen zorgen ze voor herstel van organisch verkeer, lagere cost per lead, en meetbare regionale resultaten.</div>
     <div class="track-grid">
-      <div class="track"><span class="track-badge track-urgent">Urgent</span><div class="track-title">SEO-herstel</div><div class="track-item">Redirect-audit: welke URL's zijn gebroken na de migratie</div><div class="track-item">Technische SEO-analyse (indexering, canonical tags, sitemap)</div><div class="track-item">Keyword-posities herstellen voor 25.000+ maandelijks zoekvolume</div><div class="track-item">Content-optimalisatie van bestaande pagina's</div><div class="track-impact">Impact: van 21k terug richting 60-80k organisch verkeer</div></div>
+      <div class="track"><span class="track-badge track-urgent">Urgent</span><div class="track-title">SEO-herstel</div><div class="track-item">Redirect-audit: welke URL's zijn gebroken na de migratie</div><div class="track-item">Technische SEO-analyse (indexering, canonical tags, sitemap)</div><div class="track-item">Keyword-posities herstellen voor 25.000+ maandelijks zoekvolume</div><div class="track-item">Content-optimalisatie van bestaande pagina's</div><div class="track-impact">Impact: potentieel herstel richting 35-50k (afhankelijk van oorzaakanalyse)</div></div>
       <div class="track"><span class="track-badge track-growth">Groei</span><div class="track-title">Lokale campagnestrategie</div><div class="track-item">Per vestiging aparte Meta- en Google-campagnes</div><div class="track-item">Lokale Facebook-pagina's activeren en content plannen</div><div class="track-item">Regionale targeting met radius per showroom</div><div class="track-item">CPL per vestiging meetbaar maken</div><div class="track-impact">Impact: lagere CPL, hogere relevantie, meetbare ROI per filiaal</div></div>
     </div>
     <div class="track" style="margin-bottom:24px"><span class="track-badge track-insight">Inzicht</span><div class="track-title">Management dashboard</div><div class="track-item">Looker Studio platform met login per franchisenemer</div><div class="track-item">Real-time resultaten per regio: leads, CPL, conversies, campagne-performance</div><div class="track-item">Geen afhankelijkheid van rapportage door hoofdkantoor</div><div class="track-item">Data-transparantie als basis voor betere beslissingen</div><div class="track-impact">Impact: data-driven sturing zonder extra personeel</div></div>
     <div style="text-align:center"><button class="cta-btn" onclick="switchTo('dashboard')">Bekijk dashboard preview &rarr;</button></div>
   </div>
+
 </div></div>
 
+<!-- ==================== DASHBOARD ==================== -->
 <div class="section" id="dashboard"><div class="container">
   <div class="filters">
     <span class="filter-label">Vestiging</span>
@@ -229,6 +247,7 @@
       <tr><td style="text-align:left">belisol grimbergen</td><td>50</td><td>1</td><td>24</td></tr>
     </tbody></table></div>
   </div>
+  <div class="source-note" style="text-align:center;padding:12px 0">Dashboard data is illustratief. Alle analyse-data: Semrush + Ubersuggest, april 2026.</div>
 </div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -239,7 +258,16 @@ const tc=dk?'#6b6b66':'#9c9a92';
 const bs={x:{grid:{color:gc,drawBorder:false},ticks:{color:tc,font:{size:11,family:"'DM Sans',sans-serif"}}},y:{grid:{color:gc,drawBorder:false},ticks:{color:tc,font:{size:11,family:"'DM Sans',sans-serif"}},beginAtZero:true}};
 const bo={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:dk?'#333':'#1a1a18',titleFont:{family:"'DM Sans'"},bodyFont:{family:"'DM Sans'"},cornerRadius:8,padding:10}}};
 
-new Chart(document.getElementById('s1-chart'),{type:'line',data:{labels:['Apr 24','Mei 24','Jun 24','Aug 24','Okt 24','Dec 24','Feb 25','Apr 25','Jun 25','Aug 25','Okt 25','Dec 25','Feb 26'],datasets:[{data:[65000,100000,90000,55000,45000,30000,28000,27000,25000,22000,18000,15000,20942],borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.08)',borderWidth:2.5,tension:.3,pointRadius:3,pointBackgroundColor:'#E24B4A',fill:true}]},options:{...bo,scales:{...bs,y:{...bs.y,min:0,max:120000,ticks:{...bs.y.ticks,callback:v=>(v/1000)+'k'}}}}});
+// Slide 1: Dual-source traffic chart
+new Chart(document.getElementById('s1-chart'),{type:'line',data:{
+  labels:['Jan 16','Jan 17','Jan 18','Jan 19','Jan 20','Jan 21','Jan 22','Jan 23','Jan 24','Jul 24','Okt 24','Jan 25','Apr 25','Jul 25','Okt 25','Jan 26','Apr 26'],
+  datasets:[
+    {label:'Semrush',data:[2000,3000,8000,25000,38000,57000,45000,42000,38000,32000,28000,24000,22000,20000,19000,19500,21000],borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,0.06)',borderWidth:2,tension:.3,pointRadius:2,fill:true},
+    {label:'Ubersuggest',data:[null,null,null,null,null,null,null,null,null,55000,45000,28000,27000,25000,18000,15000,20942],borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.06)',borderWidth:2,tension:.3,pointRadius:3,pointBackgroundColor:'#E24B4A',fill:true,borderDash:[5,3]}
+  ]
+},options:{...bo,scales:{...bs,y:{...bs.y,min:0,max:65000,ticks:{...bs.y.ticks,callback:v=>(v/1000)+'k'}},x:{...bs.x,ticks:{...bs.x.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:12}}}}});
+
+// Dashboard charts
 new Chart(document.getElementById('d-c1'),{type:'line',data:{labels:['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],datasets:[{data:[8,10,9,12,11,14,10,13,15,12,14,16],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.08)',borderWidth:2,tension:.35,pointRadius:3,pointBackgroundColor:'#1D9E75',fill:true}]},options:{...bo,scales:bs}});
 new Chart(document.getElementById('d-c2'),{type:'bar',data:{labels:['Meta','Google','Organisch','Direct'],datasets:[{data:[22,14,7,4],backgroundColor:['#1D9E75','#378ADD','#EF9F27','#B4B2A9'],borderRadius:6,maxBarThickness:48}]},options:{...bo,scales:bs}});
 new Chart(document.getElementById('d-c3'),{type:'bar',data:{labels:['Aalst','Asse','Grimbergen','S-P-Leeuw'],datasets:[{label:'Meta',data:[62,79,104,0],backgroundColor:'#1D9E75',borderRadius:6,maxBarThickness:32},{label:'Google',data:[76,103,0,121],backgroundColor:'#378ADD',borderRadius:6,maxBarThickness:32}]},options:{...bo,scales:{...bs,x:{...bs.x,ticks:{...bs.x.ticks,autoSkip:false}}},plugins:{...bo.plugins,tooltip:{...bo.plugins.tooltip,callbacks:{label:ctx=>ctx.dataset.label+': \u20AC'+ctx.raw}}}}});
